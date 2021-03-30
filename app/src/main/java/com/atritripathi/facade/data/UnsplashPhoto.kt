@@ -1,4 +1,4 @@
-package com.atritripathi.facade
+package com.atritripathi.facade.data
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
