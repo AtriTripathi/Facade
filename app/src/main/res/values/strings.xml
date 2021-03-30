@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Facade</string>
+    <string name="photo_loaded_from_unsplash">Photo loaded from Unsplash</string>
+</resources>
