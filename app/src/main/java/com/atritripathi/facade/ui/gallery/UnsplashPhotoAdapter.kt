@@ -12,7 +12,7 @@ import com.atritripathi.facade.ui.gallery.UnsplashPhotoAdapter.PhotoViewHolder
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
-class UnsplashPhotoAdapter : PagingDataAdapter<UnsplashPhoto, PhotoViewHolder>(PHOTO_COMPARATOR) {
+class UnsplashPhotoAdapter(private val listener: OnItemClickListener) : PagingDataAdapter<UnsplashPhoto, PhotoViewHolder>(PHOTO_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
         val binding = ItemUnsplashPhotoBinding.inflate(
@@ -28,8 +28,19 @@ class UnsplashPhotoAdapter : PagingDataAdapter<UnsplashPhoto, PhotoViewHolder>(P
         }
     }
 
-    class PhotoViewHolder(private val binding: ItemUnsplashPhotoBinding) :
+    inner class PhotoViewHolder(private val binding: ItemUnsplashPhotoBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.root.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = getItem(position)
+                    item?.let { listener.onItemClick(it) }
+                }
+            }
+        }
+
         fun bind(photo: UnsplashPhoto) {
             with(binding) {
                 Glide.with(itemView)
@@ -41,6 +52,10 @@ class UnsplashPhotoAdapter : PagingDataAdapter<UnsplashPhoto, PhotoViewHolder>(P
                 tvUsername.text = photo.user.username
             }
         }
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(photo: UnsplashPhoto)
     }
 
     companion object {
