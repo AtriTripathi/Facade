@@ -1,5 +1,6 @@
 package com.atritripathi.facade.data
 
+import androidx.lifecycle.asLiveData
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.liveData
@@ -18,5 +19,5 @@ class UnsplashRepository @Inject constructor(private val unsplashApi: UnsplashAp
                 enablePlaceholders = false
             ),
             pagingSourceFactory = { UnsplashPagingSource(unsplashApi, query) }
-        ).liveData
+        ).flow
 }
